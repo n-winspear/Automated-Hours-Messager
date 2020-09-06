@@ -76,7 +76,7 @@ def send_message():
         request_body = build_request_body(hours)
         response = requests.post(base_uri, request_body, headers=headers)
 
-        log_folder_path = "/home/pi/Documents/NathanHoursSMS/logs"
+        log_folder_path = "/home/pi/Documents/Github/Automated-Hours-Messager/logs"
         filename = datetime.datetime.now().strftime("%d-%b-%Y (%H:%M:%S)")
 
         f = open("{}/{}.txt".format(log_folder_path, filename), "w")
@@ -85,4 +85,4 @@ def send_message():
         f.close()
 
 
-#send_message()
+send_message()
