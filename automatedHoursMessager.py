@@ -27,43 +27,82 @@ def build_request_body(hours):
     # Details
     direct_report = ["Geoff", "+6421337643"]
     office_manager = ["Steph", "+6421627975"]
-    
-    messages_hours = ""
-    
-    for block in hours:
-        messages_hours += "  {}\n".format(block)
+    nathan_test = ["Nathan", "+6421856498"]
+
+    nathan_hours = "".join(
+        [f"  {block}\n" for block in hours["nathan"]]) if hours['nathan'] else None
+    tanya_hours = "".join(
+        [f"  {block}\n" for block in hours["tanya"]]) if hours['tanya'] else None
+
+    message_content = build_message_content(nathan_hours, tanya_hours)
 
     # Request Body
     return json.dumps({
         "messages": [
             {
-                "content": "Good morning {},\nNathan will be in from:\n\n{}\nThis message was sent from Nathan's automated message system".format(direct_report[0], messages_hours),
-                "destination_number": "{}".format(direct_report[1]),
+                "content": f"Good morning {direct_report[0]}, {message_content}\n\nThis message was sent from Nathan's automated message system",
+                "destination_number": f"{direct_report[1]}",
                 "delivery_report": True,
                 "format": "SMS"
             },
             {
-                "content": "Good morning {},\nNathan will be in from:\n\n{}\nThis message was sent from Nathan's automated message system".format(office_manager[0], messages_hours),
-                "destination_number": "{}".format(office_manager[1]),
+                "content": f"Good morning {nathan_test[0]},{message_content}\n\nThis message was sent from Nathan's automated message system",
+                "destination_number": f"{nathan_test[1]}",
+                "delivery_report": True,
+                "format": "SMS"
+            },
+            {
+                "content": f"Good morning {office_manager[0]},{message_content}\n\nThis message was sent from Nathan's automated message system",
+                "destination_number": f"{office_manager[1]}",
                 "delivery_report": True,
                 "format": "SMS"
             },
         ]
     })
 
+
+def build_message_content(nathan_hours, tanya_hours):
+
+    message_content = ""
+    if nathan_hours:
+        message_content += f"\n\nNathan will be in today from:\n{nathan_hours}"
+
+    if tanya_hours:
+        message_content += f"\n\nTanya will be in today from:\n{tanya_hours}"
+
+    return message_content
+
+
 def get_hours():
     day = datetime.datetime.today().weekday()
-    
+
     if day == 0:
-        return ['9:30am - 12:30pm', '4:30pm - 5:30pm']
+        return {
+            "nathan": ['9:30am - 12:30pm', '4:30pm - 5:30pm'],
+            "tanya": None
+        }
+
     elif day == 1:
-        return ['9:30am - 11:30pm', '4:30pm - 5:30pm']
+        return {
+            "nathan": ['9:30am - 11:30pm', '4:30pm - 5:30pm'],
+            "tanya": ['1:30pm - 4:30pm']
+        }
     elif day == 2:
-        return ['2:30pm - 5:30pm']
+        return {
+            "nathan": ['2:30pm - 5:30pm'],
+            "tanya": ['10:00am - 3:00pm']
+        }
     elif day == 3:
-        return ['11:30am - 1:30pm']
+        return {
+            "nathan": ['11:30am - 1:30pm'],
+            "tanya": None
+        }
+
     elif day == 4:
-        return ['9:30am - 5:30pm']
+        return {
+            "nathan": ['9:30am - 5:30pm'],
+            "tanya": None
+        }
     else:
         return ['Not a weekday']
 
