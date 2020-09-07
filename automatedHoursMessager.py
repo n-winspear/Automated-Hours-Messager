@@ -78,6 +78,37 @@ def get_hours():
 
     if day == 0:
         return {
+            "nathan": ['9:00am - 5:30pm'],
+            "tanya": None
+        }
+
+    elif day == 1:
+        return {
+            "nathan": ['9:00am - 5:30pm'],
+            "tanya": ['9:30am - 10:30am', '1:30pm - 4:30pm']
+        }
+    elif day == 2:
+        return {
+            "nathan": ['9:00am - 5:30pm'],
+            "tanya": ['9:00am - 10:30am', '2:30pm - 5:00pm']
+        }
+    elif day == 3:
+        return {
+            "nathan": ['9:00am - 5:30pm'],
+            "tanya": None
+        }
+
+    elif day == 4:
+        return {
+            "nathan": ['9:00am - 5:30pm'],
+            "tanya": None
+        }
+    else:
+        return ['Not a weekday']
+
+    """
+    if day == 0:
+        return {
             "nathan": ['9:30am - 12:30pm', '4:30pm - 5:30pm'],
             "tanya": None
         }
@@ -85,12 +116,12 @@ def get_hours():
     elif day == 1:
         return {
             "nathan": ['9:30am - 11:30pm', '4:30pm - 5:30pm'],
-            "tanya": ['1:30pm - 4:30pm']
+            "tanya": ['9:30am - 10:30am', '1:30pm - 4:30pm']
         }
     elif day == 2:
         return {
             "nathan": ['2:30pm - 5:30pm'],
-            "tanya": ['10:00am - 3:00pm']
+            "tanya": ['9:00am - 10:30am', '2:30pm - 5:00pm']
         }
     elif day == 3:
         return {
@@ -105,6 +136,7 @@ def get_hours():
         }
     else:
         return ['Not a weekday']
+    """
 
 
 def send_message():
