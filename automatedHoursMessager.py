@@ -84,13 +84,13 @@ def get_hours():
 
     elif day == 1:
         return {
-            "nathan": ['9:00am - 5:30pm'],
-            "tanya": ['9:30am - 10:30am', '1:30pm - 4:30pm']
+            "nathan": ['1:00pm - 5:30pm'],
+            "tanya": None #['9:30am - 10:30am', '1:30pm - 4:30pm']
         }
     elif day == 2:
         return {
             "nathan": ['9:00am - 5:30pm'],
-            "tanya": ['9:00am - 10:30am', '2:30pm - 5:00pm']
+            "tanya": ['9:30am - 4:30pm'] #['9:00am - 10:30am', '2:30pm - 5:00pm']
         }
     elif day == 3:
         return {
