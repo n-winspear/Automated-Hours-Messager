@@ -55,12 +55,14 @@ def build_request_body(hours):
                 "delivery_report": True,
                 "format": "SMS"
             },
+            """
             {
                 "content": f"Good morning {office_manager[0]},{message_content}\n\nThis message was sent from Nathan's automated message system",
                 "destination_number": f"{office_manager[1]}",
                 "delivery_report": True,
                 "format": "SMS"
             },
+            """
         ]
     })
 
@@ -85,33 +87,33 @@ def get_hours():
     
     if day == 0:
         return {
-            "nathan": ['9:30am - 12:30pm', '4:30pm - 5:30pm'],
+            "nathan": ['8:30am - 3:45pm'],
             "tanya": None,
-            "divya": ['9:00am - 5:30pm'],
+            "divya": None,
         }
 
     elif day == 1:
         return {
-            "nathan": ['9:30am - 11:30am', '4:30pm - 5:30pm'],
-            "tanya": ['9:30am - 10:30am', '1:30pm - 4:30pm'],
-            "divya": ['9:00am - 5:30pm'],
+            "nathan": ['8:30am - 9:45am', '2:15pm - 4:45pm'],
+            "tanya": None,
+            "divya": ['8:30am - 2:30pm'],
         }
     elif day == 2:
         return {
-            "nathan": ['2:30pm - 5:30pm'],
-            "tanya": ['9:00am - 10:30am', '2:30pm - 5:00pm'],
-            "divya": None,
+            "nathan": ['10:15pm - 11:45pm'],
+            "tanya": None,
+            "divya": ['8:30am - 2:30pm'],
         }
     elif day == 3:
         return {
-            "nathan": ['11:30am - 1:30pm'],
+            "nathan": ['10:15pm - 11:45pm', '1:15pm - 5:00pm'],
             "tanya": None,
-            "divya": ['9:00am - 1:00pm']
+            "divya": ['8:30am - 5:00pm']
         }
 
     elif day == 4:
         return {
-            "nathan": ['9:30am - 5:30pm'],
+            "nathan": ['8:30am - 10:45pm'],
             "tanya": None,
             "divya": None
         }
@@ -127,13 +129,15 @@ def send_message():
         request_body = build_request_body(hours)
         response = requests.post(base_uri, request_body, headers=headers)
 
-        log_folder_path = "/home/pi/Documents/Github/Automated-Hours-Messager/logs"
-        filename = datetime.datetime.now().strftime("%d-%b-%Y (%H:%M:%S)")
+        try:
+            log_folder_path = "/home/pi/Documents/Github/Automated-Hours-Messager/logs"
+            filename = datetime.datetime.now().strftime("%d-%b-%Y (%H:%M:%S)")
 
-        f = open("{}/{}.txt".format(log_folder_path, filename), "w")
-        f.write("Messages sent at: {}\n\n{}".format(
-            datetime.datetime.now(), response))
-        f.close()
-
+            f = open("{}/{}.txt".format(log_folder_path, filename), "w")
+            f.write("Messages sent at: {}\n\n{}".format(
+                datetime.datetime.now(), response))
+            f.close()
+        except:
+            print('Failed to log.')
 
 send_message()
