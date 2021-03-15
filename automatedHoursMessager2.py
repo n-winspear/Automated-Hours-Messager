@@ -3,14 +3,17 @@ import base64
 import requests
 import json
 import datetime
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # API Credentials
 base_uri = 'https://api.messagemedia.com/v1/messages'
-api_key = 'WulBYmeyo8fxyoKfUXrx'
-api_secret = 'r2JvTwe22OXDaIDzhruoZPQywYBWW5'
+API_KEY = os.getenv("API_KEY")
+API_SECRET = os.getenv("API_SECRET")
 
 # API Auth Header
-api_auth_input = "{}:{}".format(api_key, api_secret)
+api_auth_input = "{}:{}".format(API_KEY, API_SECRET)
 api_auth_bytes = api_auth_input.encode('ascii')
 api_auth_base64_bytes = base64.b64encode(api_auth_bytes)
 api_auth_header = api_auth_base64_bytes.decode('ascii')
@@ -49,20 +52,6 @@ def build_request_body(hours):
                 "delivery_report": True,
                 "format": "SMS"
             },
-            """
-            {
-                "content": f"Good morning {direct_report[0]}, {message_content}\n\nThis message was sent from Nathan's automated message system",
-                "destination_number": f"{direct_report[1]}",
-                "delivery_report": True,
-                "format": "SMS"
-            },
-            {
-                "content": f"Good morning {office_manager[0]},{message_content}\n\nThis message was sent from Nathan's automated message system",
-                "destination_number": f"{office_manager[1]}",
-                "delivery_report": True,
-                "format": "SMS"
-            },
-            """
         ]
     })
 
@@ -128,6 +117,7 @@ def send_message():
     #if current_time.hour == 8:
     request_body = build_request_body(hours)
     response = requests.post(base_uri, request_body, headers=headers)
+    print(response.json())
 
     try:
         log_folder_path = "/home/pi/Documents/Github/Automated-Hours-Messager/logs"
