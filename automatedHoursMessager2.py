@@ -51,7 +51,7 @@ def build_request_body(hours):
                 "destination_number": f"{nathan_test[1]}",
                 "delivery_report": True,
                 "format": "SMS"
-            },
+            },        
         ]
     })
 
@@ -115,17 +115,18 @@ def send_message():
     hours = get_hours()
 
     #if current_time.hour == 8:
+    print("Sending messages...")
     request_body = build_request_body(hours)
     response = requests.post(base_uri, request_body, headers=headers)
-    print(response.json())
-
+    print("Messages sent!" if response.status_code == 202 else "Messages failed to send.")
+    
     try:
         log_folder_path = "/home/pi/Documents/Github/Automated-Hours-Messager/logs"
         filename = datetime.datetime.now().strftime("%d-%b-%Y (%H:%M:%S)")
 
         f = open("{}/{}.txt".format(log_folder_path, filename), "w")
         f.write("Messages sent at: {}\n\n{}".format(
-            datetime.datetime.now(), response))
+            datetime.datetime.now(), response.json()))
         f.close()
     except:
         print('Failed to log.')

@@ -57,7 +57,8 @@ def build_request_body(hours):
                 "destination_number": f"{nathan_test[1]}",
                 "delivery_report": True,
                 "format": "SMS"
-            },        ]
+            },        
+        ]
     })
 
 
