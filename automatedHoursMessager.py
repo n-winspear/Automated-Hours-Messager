@@ -89,7 +89,7 @@ def get_hours():
 
     elif day == 1:
         return {
-            "nathan": ['8:30am - 9:45am', '2:15pm - 4:45pm'],
+            "nathan": ['8:30am - 12pm', '2:15pm - 4:45pm'],
             "tanya": None,
             "divya": ['8:30am - 2:30pm'],
         }
@@ -108,7 +108,7 @@ def get_hours():
 
     elif day == 4:
         return {
-            "nathan": ['8:30am - 10:45pm'],
+            "nathan": None,
             "tanya": None,
             "divya": None
         }
