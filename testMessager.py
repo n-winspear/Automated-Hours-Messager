@@ -89,13 +89,13 @@ def get_hours():
         }
     elif day == 2:
         return {
-            "nathan": ['10:15pm - 11:45pm'],
+            "nathan": ['10:15am - 11:45am'],
             "tanya": None,
             "divya": ['8:30am - 2:30pm'],
         }
     elif day == 3:
         return {
-            "nathan": ['10:15pm - 11:45pm', '1:15pm - 5:00pm'],
+            "nathan": ['10:15am - 11:45am', '1:15pm - 5:00pm'],
             "tanya": None,
             "divya": ['8:30am - 5:00pm']
         }
@@ -121,14 +121,16 @@ def send_message():
     print("Messages sent!" if response.status_code == 202 else "Messages failed to send.")
     
     try:
+        print("Creating log...")
         log_folder_path = "/home/pi/Documents/Github/Automated-Hours-Messager/logs"
         filename = datetime.datetime.now().strftime("%d-%b-%Y (%H:%M:%S)")
 
         f = open("{}/{}.txt".format(log_folder_path, filename), "w")
         f.write("Messages sent at: {}\n\n{}".format(
-            datetime.datetime.now(), response.json()))
+            datetime.datetime.now(), json.dumps(response.json(), indent=4, sort_keys=True)))
         f.close()
+        print("Log created!")
     except:
-        print('Failed to log.')
+        print('Failed to create log.')
 
 send_message()

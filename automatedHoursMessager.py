@@ -116,14 +116,16 @@ def send_message():
     print("Messages sent!" if response.status_code == 202 else "Messages failed to send.")
     
     try:
+        print("Creating log...")
         log_folder_path = "/home/pi/Documents/Github/Automated-Hours-Messager/logs"
         filename = datetime.datetime.now().strftime("%d-%b-%Y (%H:%M:%S)")
 
         f = open("{}/{}.txt".format(log_folder_path, filename), "w")
         f.write("Messages sent at: {}\n\n{}".format(
-            datetime.datetime.now(), response.json()))
+            datetime.datetime.now(), json.dumps(response.json(), indent=4, sort_keys=True)))
         f.close()
+        print("Log created!")
     except:
-        print('Failed to log.')
+        print('Failed to create log.')
 
 send_message()
