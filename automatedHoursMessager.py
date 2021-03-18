@@ -35,13 +35,10 @@ def build_request_body(hours):
     nathan_hours = "".join(
         [f"  {block}\n" for block in hours["nathan"]]) if hours['nathan'] else None
     
-    tanya_hours = "".join(
-        [f"  {block}\n" for block in hours["tanya"]]) if hours['tanya'] else None
-        
     divya_hours = "".join(
         [f"  {block}\n" for block in hours["divya"]]) if hours['divya'] else None
 
-    message_content = build_message_content(nathan_hours, tanya_hours, divya_hours)
+    message_content = build_message_content(nathan_hours, divya_hours)
 
     # Request Body
     return json.dumps({
@@ -62,15 +59,12 @@ def build_request_body(hours):
     })
 
 
-def build_message_content(nathan_hours, tanya_hours, divya_hours):
+def build_message_content(nathan_hours, divya_hours):
 
     message_content = ""
     if nathan_hours:
         message_content += f"\n\nNathan will be in today from:\n{nathan_hours}"
 
-    if tanya_hours:
-        message_content += f"\n\nTanya will be in today from:\n{tanya_hours}"
-        
     if divya_hours:
         message_content += f"\n\nDivya will be in today from:\n{divya_hours}"
 
@@ -83,33 +77,28 @@ def get_hours():
     if day == 0:
         return {
             "nathan": ['8:30am - 3:45pm'],
-            "tanya": None,
             "divya": None,
         }
 
     elif day == 1:
         return {
             "nathan": ['8:30am - 12pm', '2:15pm - 4:45pm'],
-            "tanya": None,
             "divya": ['8:30am - 2:30pm'],
         }
     elif day == 2:
         return {
             "nathan": ['10:15pm - 11:45pm'],
-            "tanya": None,
             "divya": ['8:30am - 2:30pm'],
         }
     elif day == 3:
         return {
             "nathan": ['10:15pm - 11:45pm', '1:15pm - 5:00pm'],
-            "tanya": None,
             "divya": ['8:30am - 5:00pm']
         }
 
     elif day == 4:
         return {
             "nathan": None,
-            "tanya": None,
             "divya": None
         }
     else:
