@@ -82,17 +82,17 @@ def get_hours():
 
     elif day == 1:
         return {
-            "nathan": ['8:30am - 12pm', '2:15pm - 4:45pm'],
+            "nathan": ['8:30am - 10:00am', '11:00am - 1:00pm', '2:15pm - 4:45pm'],
             "divya": ['8:30am - 2:30pm'],
         }
     elif day == 2:
         return {
-            "nathan": ['10:15pm - 11:45pm'],
+            "nathan": ['10:15am - 11:45am'],
             "divya": ['8:30am - 2:30pm'],
         }
     elif day == 3:
         return {
-            "nathan": ['10:15pm - 11:45pm', '1:15pm - 5:00pm'],
+            "nathan": ['10:15am - 11:45am', '1:15pm - 5:00pm'],
             "divya": ['8:30am - 5:00pm']
         }
 
@@ -106,10 +106,8 @@ def get_hours():
     
 
 def send_message():
-    current_time = datetime.datetime.now()
     hours = get_hours()
 
-    #if current_time.hour == 8:
     print("Sending messages...")
     request_body = build_request_body(hours)
     response = requests.post(base_uri, request_body, headers=headers)
