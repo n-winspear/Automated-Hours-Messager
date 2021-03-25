@@ -108,22 +108,29 @@ def get_hours():
 def send_message():
     hours = get_hours()
 
-    print("Sending messages...")
-    request_body = build_request_body(hours)
-    response = requests.post(base_uri, request_body, headers=headers)
-    print("Messages sent!" if response.status_code == 202 else "Messages failed to send.")
-    
-    try:
-        print("Creating log...")
-        log_folder_path = "/home/pi/Documents/Github/Automated-Hours-Messager/logs"
-        filename = datetime.datetime.now().strftime("%d-%b-%Y (%H:%M:%S)")
+    send_message_check = False
 
-        f = open("{}/{}.txt".format(log_folder_path, filename), "w")
-        f.write("Messages sent at: {}\n\n{}".format(
-            datetime.datetime.now(), json.dumps(response.json(), indent=4, sort_keys=True)))
-        f.close()
-        print("Log created!")
-    except:
-        print('Failed to create log.')
+    for hours_block in hours.values():
+        if hours_block != None:
+            send_message_check = True
+
+    if send_message_check:
+        print("Sending messages...")
+        request_body = build_request_body(hours)
+        response = requests.post(base_uri, request_body, headers=headers)
+        print("Messages sent!" if response.status_code == 202 else "Messages failed to send.")
+
+        try:
+            print("Creating log...")
+            log_folder_path = "/home/pi/Documents/Github/Automated-Hours-Messager/logs"
+            filename = datetime.datetime.now().strftime("%d-%b-%Y (%H:%M:%S)")
+
+            f = open("{}/{}.txt".format(log_folder_path, filename), "w")
+            f.write("Messages sent at: {}\n\n{}".format(
+                datetime.datetime.now(), json.dumps(response.json(), indent=4, sort_keys=True)))
+            f.close()
+            print("Log created!")
+        except:
+            print('Failed to create log.')
 
 send_message()
