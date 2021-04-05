@@ -82,19 +82,40 @@ def get_hours():
 
     elif day == 1:
         return {
+            "nathan": ['8:30am - 3:00pm'],
+            "divya": ['8:30am - 2:30pm'],
+        }
+        """
+    elif day == 1:
+        return {
             "nathan": ['8:30am - 12:00pm', '2:15pm - 4:45pm'],
             "divya": ['8:30am - 2:30pm'],
         }
+        """
+    elif day == 2:
+        return {
+            "nathan": ['8:30am - 5:00pm'],
+            "divya": ['8:30am - 2:30pm', '5pm - Meet Uni Students'],
+        }
+        """
     elif day == 2:
         return {
             "nathan": ['10:15am - 11:45am'],
             "divya": ['8:30am - 2:30pm'],
         }
+        """
+    elif day == 3:
+        return {
+            "nathan": ['8:30am - 3:00pm'],
+            "divya": ['8:30am - 5:00pm']
+        }
+        """
     elif day == 3:
         return {
             "nathan": ['10:15am - 11:45am', '1:15pm - 5:00pm'],
             "divya": ['8:30am - 5:00pm']
         }
+        """
 
     elif day == 4:
         return {
