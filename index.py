@@ -29,25 +29,31 @@ def get_calendar_events() -> list:
     return employees
 
 def get_hour_blocks(employees: list) -> list:
-    employee_hour_blocks = employees.copy()
-
+    hour_blocks = []
     current_date = arrow.get(datetime.now())
+
     for employee in employees:
-        employee_hour_blocks[employee]["hour_blocks"] = []
+        employee_hour_blocks = []
         for event in employee["events"]:
+
             if event.begin.date() == current_date.date():
                 if event.name == 'ISL / SLD':
                     start_time = event.begin.strftime("%-I:%M %p")
                     end_time = event.end.strftime("%-I:%M %p")
-                    employee_hour_blocks[employee]["hour_blocks"].append(f'{start_time}-{end_time}')
+                    employee_hour_blocks.append(f'{start_time} - {end_time}')
+
+        hour_blocks.append({
+            "name": employee["name"],
+            "hour_blocks": employee_hour_blocks
+        })
     
-    return employee_hour_blocks
+    return hour_blocks
 
 
 def main() -> None:
     employees = get_calendar_events()
-    employee_hour_blocks = get_hour_blocks(employees)
-    print(employee_hour_blocks)
+    hour_blocks = get_hour_blocks(employees)
+    print(hour_blocks)
 
 
 main()
