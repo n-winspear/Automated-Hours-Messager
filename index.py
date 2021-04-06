@@ -35,8 +35,9 @@ def get_hour_blocks(employees: list) -> list:
     for employee in employees:
         employee_hour_blocks = []
         for event in employee["events"]:
-
-            if event.begin.date() == current_date.date():
+            print(event.begin.date(), event.name)
+            #if event.begin.date() == current_date.date():
+            if event.begin.date() == arrow.get(2021, 3, 18).date():
                 if event.name == 'ISL / SLD':
                     start_time = event.begin.strftime("%-I:%M %p")
                     end_time = event.end.strftime("%-I:%M %p")
