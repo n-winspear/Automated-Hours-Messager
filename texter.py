@@ -1,6 +1,7 @@
 import json
 import base64
 import os
+import requests
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -40,3 +41,8 @@ class Texter:
             })
 
         return json.dumps(request_body)
+
+    def send_text_messages(self, request_body: str) -> dict:
+        headers = self.__build_request_headers()
+        response = requests.get(self.__base_URL, request_body, headers=headers)
+        return response

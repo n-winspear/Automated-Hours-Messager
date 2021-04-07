@@ -1,14 +1,22 @@
 import os
-import arrow
-from datetime import datetime
-from dateutil import tz
+from datetime import datetime, timedelta
 from texter import Texter
+from logger import Logger
 from icsparser import ICSParser
-from ics import Event
 from dotenv import load_dotenv
 load_dotenv()
 
 CURRENT_EMPLOYEES = ['Nathan']
+RECIPIENTS = [
+    {
+        "first_name": "Nathan",
+        "last_name": "Winspear",
+        "phone_number": "+6421856498"
+    }
+]
+
+START_DATE = datetime.now().date()
+END_DATE = START_DATE + timedelta(days=1)
 
 def get_ics_paths() -> list:
     employees = []
@@ -24,24 +32,20 @@ def get_calendar_events() -> list:
      
     for employee in employees:
         parser = ICSParser(employee["ics_path"])
-        employee["events"] = parser.get_calendar_events()
+        employee["events"] = parser.get_ics_calendar_events(START_DATE, END_DATE)
 
     return employees
 
 def get_hour_blocks(employees: list) -> list:
     hour_blocks = []
-    current_date = arrow.get(datetime.now())
+    current_date = datetime.now().date()
 
     for employee in employees:
         employee_hour_blocks = []
         for event in employee["events"]:
-            print(event.begin.date(), event.name)
-            #if event.begin.date() == current_date.date():
-            if event.begin.date() == arrow.get(2021, 3, 18).date():
-                if event.name == 'ISL / SLD':
-                    start_time = event.begin.strftime("%-I:%M %p")
-                    end_time = event.end.strftime("%-I:%M %p")
-                    employee_hour_blocks.append(f'{start_time} - {end_time}')
+            if event.start_date == current_date:
+                if event.title == 'ISL / SLD':
+                    employee_hour_blocks.append(f'{event.start_time} - {event.end_time}')
 
         hour_blocks.append({
             "name": employee["name"],
@@ -50,11 +54,24 @@ def get_hour_blocks(employees: list) -> list:
     
     return hour_blocks
 
+def build_text_message_content(hour_blocks: list) -> str:
+    text_message_content = ""
+
+    for employee in hour_blocks:
+        if len(employee["hour_blocks"]) > 0:
+            text_message_content += '\n\n{} will be in today from:\n  {}'.format(employee["name"], "  \n".join(employee["hour_blocks"]))
+            
+    return text_message_content
 
 def main() -> None:
     employees = get_calendar_events()
     hour_blocks = get_hour_blocks(employees)
-    print(hour_blocks)
+    text_message_content = build_text_message_content(hour_blocks)
+    txtr = Texter()
+    request_body = txtr.build_request_body(RECIPIENTS, text_message_content)
+    response = txtr.send_text_messages(request_body)
+    lggr = Logger()
+    lggr.create_log(response)
 
 
 main()
