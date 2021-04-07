@@ -44,12 +44,6 @@ def build_request_body(hours):
     return json.dumps({
         "messages": [
             {
-                "content": f"Good morning {direct_report[0]}, {message_content}\n\nThis message was sent from Nathan's automated message system",
-                "destination_number": f"{direct_report[1]}",
-                "delivery_report": True,
-                "format": "SMS"
-            },
-            {
                 "content": f"Good morning {nathan_test[0]},{message_content}\n\nThis message was sent from Nathan's automated message system",
                 "destination_number": f"{nathan_test[1]}",
                 "delivery_report": True,

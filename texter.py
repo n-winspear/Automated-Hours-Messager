@@ -26,6 +26,7 @@ class Texter:
             'Content-Type': 'application/json',
             'Authorization': f'Basic {self.__authorization_header}'
         }
+        return headers
 
     def build_request_body(self, recipients: list, text_message_content: str) -> str:
         request_body = {
@@ -44,5 +45,5 @@ class Texter:
 
     def send_text_messages(self, request_body: str) -> dict:
         headers = self.__build_request_headers()
-        response = requests.get(self.__base_URL, request_body, headers=headers)
+        response = requests.post(self.__base_URL, request_body, headers=headers)
         return response
