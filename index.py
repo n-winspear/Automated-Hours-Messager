@@ -67,11 +67,12 @@ def main() -> None:
     employees = get_calendar_events()
     hour_blocks = get_hour_blocks(employees)
     text_message_content = build_text_message_content(hour_blocks)
-    txtr = Texter()
-    request_body = txtr.build_request_body(RECIPIENTS, text_message_content)
-    response = txtr.send_text_messages(request_body)
-    lggr = Logger()
-    lggr.create_log(response)
+    if text_message_content != "":
+        txtr = Texter()
+        request_body = txtr.build_request_body(RECIPIENTS, text_message_content)
+        response = txtr.send_text_messages(request_body)
+        lggr = Logger()
+        lggr.create_log(response)
 
 
 main()
