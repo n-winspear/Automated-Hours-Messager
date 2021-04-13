@@ -12,7 +12,17 @@ RECIPIENTS = [
         "first_name": "Nathan",
         "last_name": "Winspear",
         "phone_number": "+6421856498"
-    }
+    },
+    {
+        "first_name": "Geoff",
+        "last_name": "Lorigan",
+        "phone_number": "+6421337643"
+    },
+    {
+        "first_name": "Demian",
+        "last_name": "Rosenthal",
+        "phone_number": "+64275310871"
+    },
 ]
 
 START_DATE = datetime.now().date()
