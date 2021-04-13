@@ -6,7 +6,7 @@ from icsparser import ICSParser
 from dotenv import load_dotenv
 load_dotenv()
 
-CURRENT_EMPLOYEES = ['Nathan']
+CURRENT_EMPLOYEES = ['Nathan', 'Divya']
 RECIPIENTS = [
     {
         "first_name": "Nathan",
