@@ -11,6 +11,7 @@ class ICSParser:
         self.__calendar = self.__get_calendar_from_ics()
 
     def __get_calendar_from_ics(self) -> Calendar:
+        print(self.__ics_path)
         calendar = Calendar.from_ical(requests.get(self.__ics_path).text)
         return calendar
 
