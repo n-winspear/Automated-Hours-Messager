@@ -6,7 +6,8 @@ from icsparser import ICSParser
 from dotenv import load_dotenv
 load_dotenv()
 
-CURRENT_EMPLOYEES = ['Nathan', 'Divya']
+CURRENT_EMPLOYEES = ["Nathan"]
+
 RECIPIENTS = [
     {
         "first_name": "Nathan",
@@ -22,7 +23,7 @@ RECIPIENTS = [
         "first_name": "Demian",
         "last_name": "Rosenthal",
         "phone_number": "+64275310871"
-    },
+    }
 ]
 
 START_DATE = datetime.now().date()
