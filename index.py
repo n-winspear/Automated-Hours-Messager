@@ -77,9 +77,8 @@ def main() -> None:
         txtr = Texter()
         request_body = txtr.build_request_body(RECIPIENTS, text_message_content)
         response = txtr.send_text_messages(request_body)
-        print(response.json())
-        #lggr = Logger()
-        #lggr.create_log(response)
+        lggr = Logger()
+        lggr.create_log(response)
 
 
 main()
