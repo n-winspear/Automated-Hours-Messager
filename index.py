@@ -6,7 +6,6 @@ from icsparser import ICSParser
 from dotenv import load_dotenv
 load_dotenv()
 
-CURRENT_EMPLOYEES = ["Nathan"]
 PART_TIMER_ICS=os.getenv("PART_TIMER_CALENDAR_ICS")
 
 RECIPIENTS = [
@@ -31,7 +30,7 @@ START_DATE = datetime.now().date()
 END_DATE = START_DATE + timedelta(days=1)
 
 def get_calendar_events() -> list:
-    parser = ICSParser(PART_TIMER_ICS)     
+    parser = ICSParser(PART_TIMER_ICS)
     calendar_events = parser.get_ics_calendar_events(START_DATE, END_DATE)
 
     employee_hours = {}
@@ -55,7 +54,7 @@ def get_hour_blocks(employee_hours: object) -> object:
             "name": employee,
             "hour_blocks": employee_hour_blocks
         })
-    
+
     return hour_blocks
 
 def build_text_message_content(hour_blocks: list) -> str:
@@ -64,7 +63,7 @@ def build_text_message_content(hour_blocks: list) -> str:
     for employee in hour_blocks:
         if len(employee["hour_blocks"]) > 0:
             text_message_content += '\n\n{} will be in today from:\n  {}'.format(employee["name"], "\n  ".join(employee["hour_blocks"]))
-            
+
     return text_message_content
 
 def main() -> None:
@@ -77,6 +76,5 @@ def main() -> None:
         response = txtr.send_text_messages(request_body)
         lggr = Logger()
         lggr.create_log(response)
-
 
 main()
