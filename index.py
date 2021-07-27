@@ -14,9 +14,7 @@ RECIPIENTS = [
         "first_name": "Nathan",
         "last_name": "Winspear",
         "phone_number": "+6421856498"
-    }
-]
-"""
+    },
     {
         "first_name": "Geoff",
         "last_name": "Lorigan",
@@ -27,7 +25,7 @@ RECIPIENTS = [
         "last_name": "Rosenthal",
         "phone_number": "+64275310871"
     }
-"""
+]
 
 START_DATE = datetime.now().date()
 END_DATE = START_DATE + timedelta(days=1)
@@ -65,7 +63,7 @@ def build_text_message_content(hour_blocks: list) -> str:
 
     for employee in hour_blocks:
         if len(employee["hour_blocks"]) > 0:
-            text_message_content += '\n\n{} will be in today from:\n  {}'.format(employee["name"], "  \n".join(employee["hour_blocks"]))
+            text_message_content += '\n\n{} will be in today from:\n  {}'.format(employee["name"], "\n  ".join(employee["hour_blocks"]))
             
     return text_message_content
 
