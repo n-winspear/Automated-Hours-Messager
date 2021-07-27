@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 CURRENT_EMPLOYEES = ["Nathan"]
+PART_TIMER_ICS=os.getenv("PART_TIMER_CALENDAR_ICS")
 
 RECIPIENTS = [
     {
@@ -29,23 +30,12 @@ RECIPIENTS = [
 START_DATE = datetime.now().date()
 END_DATE = START_DATE + timedelta(days=1)
 
-def get_ics_paths() -> list:
-    employees = []
-    for employee in CURRENT_EMPLOYEES:
-        employees.append({
-            "name": employee,
-            "ics_path": os.getenv(f"{employee.upper()}_ICS")
-        })
-    return employees
-
 def get_calendar_events() -> list:
-    employees = get_ics_paths()
-     
-    for employee in employees:
-        parser = ICSParser(employee["ics_path"])
-        employee["events"] = parser.get_ics_calendar_events(START_DATE, END_DATE)
+    parser = ICSParser(PART_TIMER_ICS)     
+    calendar_events = parser.get_ics_calendar_events(START_DATE, END_DATE)
 
-    return employees
+    print(calendar_events)    
+
 
 def get_hour_blocks(employees: list) -> list:
     hour_blocks = []
@@ -78,12 +68,15 @@ def main() -> None:
     employees = get_calendar_events()
     hour_blocks = get_hour_blocks(employees)
     text_message_content = build_text_message_content(hour_blocks)
+    print(text_message_content)
+    """
     if text_message_content != "":
         txtr = Texter()
         request_body = txtr.build_request_body(RECIPIENTS, text_message_content)
         response = txtr.send_text_messages(request_body)
         lggr = Logger()
         lggr.create_log(response)
+    """
 
 
 main()
