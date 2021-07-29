@@ -16,3 +16,6 @@ class CleanedEvent:
 
     def __repr__(self) -> str:
         return f"<EVENT: {self.title}\nSTART: {self.start_date} - {self.start_time}\nEND: {self.end_date} - {self.end_time}>\n"
+
+    def get_hours(self) -> str:
+        return f"{self.start_time} - {self.end_time}"

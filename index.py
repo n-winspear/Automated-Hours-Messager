@@ -46,10 +46,9 @@ def get_calendar_events() -> list:
 
 def get_hour_blocks(employee_hours: object) -> object:
     hour_blocks = []
-    current_date = datetime.now().date()
 
     for employee, events in employee_hours.items():
-        employee_hour_blocks = [f'{event.start_time} - {event.end_time}' for event in events if event.start_date == START_DATE]
+        employee_hour_blocks = [event.get_hours() for event in events if event.start_date == START_DATE]
         hour_blocks.append({
             "name": employee,
             "hour_blocks": employee_hour_blocks
